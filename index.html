@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>GymFlow - Interval Timer</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0f0f0f">
+</head>
+<body>
+  <!-- Mobile Tab Navigation -->
+  <nav class="mobile-tabs" id="mobile-tabs">
+    <button class="tab-btn active" onclick="switchTab('exercises')">
+      <span class="tab-icon">&#128170;</span>
+      <span class="tab-label">Exercises</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('workout')">
+      <span class="tab-icon">&#128221;</span>
+      <span class="tab-label">Workout</span>
+      <span class="tab-badge" id="workout-badge"></span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('timer')">
+      <span class="tab-icon">&#9201;</span>
+      <span class="tab-label">Timer</span>
+    </button>
+  </nav>
+
+  <!-- Tab 1: Exercise Browser -->
+  <section class="tab-content active" id="tab-exercises">
+    <div class="mobile-header">
+      <h1>GymFlow</h1>
+      <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()">🔊</button>
+    </div>
+    <div class="exercise-browser">
+      <input type="text" class="search-input" id="exercise-search" placeholder="Search exercises..." oninput="onSearch()">
+      <div class="filter-row">
+        <div class="category-filters" id="category-filters"></div>
+      </div>
+      <div class="filter-row">
+        <div class="equipment-filters" id="equipment-filters"></div>
+      </div>
+      <div class="exercise-count" id="exercise-count"></div>
+      <div class="exercise-list" id="exercise-list"></div>
+    </div>
+  </section>
+
+  <!-- Tab 2: Workout Builder -->
+  <section class="tab-content" id="tab-workout">
+    <div class="mobile-header">
+      <h1>Your Workout</h1>
+      <button class="btn btn-primary" onclick="startWorkout()">Start &#9654;</button>
+    </div>
+    <div class="workout-builder">
+      <div class="rest-settings">
+        <div class="rest-setting">
+          <label>Rest between sets</label>
+          <div class="rest-input-group">
+            <button class="rest-adj" onclick="adjustRest('sets', -10)">-</button>
+            <input type="number" id="rest-between-sets" value="60" min="10" max="300">
+            <button class="rest-adj" onclick="adjustRest('sets', 10)">+</button>
+            <span>sec</span>
+          </div>
+        </div>
+        <div class="rest-setting">
+          <label>Rest between exercises</label>
+          <div class="rest-input-group">
+            <button class="rest-adj" onclick="adjustRest('exercises', -10)">-</button>
+            <input type="number" id="rest-between-exercises" value="90" min="10" max="300">
+            <button class="rest-adj" onclick="adjustRest('exercises', 10)">+</button>
+            <span>sec</span>
+          </div>
+        </div>
+      </div>
+      <div class="workout-exercises" id="workout-exercises">
+        <div class="empty-state">
+          <div class="icon">&#127947;</div>
+          <p>Add exercises from the Exercises tab</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab 3: Active Timer -->
+  <section class="tab-content" id="tab-timer">
+    <div class="timer-view">
+      <!-- GIF Display -->
+      <div class="timer-gif" id="timer-gif">
+        <div class="placeholder">Select exercises and start your workout</div>
+      </div>
+
+      <!-- Timer Display -->
+      <div class="timer-core">
+        <div class="timer-phase-label" id="timer-phase-label">Ready</div>
+        <div class="timer-time" id="timer-time">00:00</div>
+        <div class="timer-exercise-name" id="timer-exercise-name"></div>
+        <div class="timer-progress">
+          <div class="timer-progress-bar" id="timer-progress-bar"></div>
+        </div>
+        <div class="timer-meta" id="timer-meta"></div>
+      </div>
+
+      <!-- Controls -->
+      <div class="timer-controls" id="timer-controls">
+        <button class="btn-icon play" onclick="startWorkout()" title="Start">&#9654;</button>
+      </div>
+
+      <!-- Countdown Overlay -->
+      <div class="countdown-overlay" id="countdown-overlay">
+        <div class="countdown-number" id="countdown-number">3</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exercise Detail Modal -->
+  <div class="modal-overlay" id="exercise-modal" onclick="closeModal(event)">
+    <div class="modal-content" id="modal-content">
+    </div>
+  </div>
+
+  <script src="js/timer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
