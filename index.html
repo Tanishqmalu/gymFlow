@@ -23,6 +23,10 @@
       <span class="tab-label">Workout</span>
       <span class="tab-badge" id="workout-badge"></span>
     </button>
+    <button class="tab-btn" onclick="switchTab('saved')">
+      <span class="tab-icon">&#128190;</span>
+      <span class="tab-label">Saved</span>
+    </button>
     <button class="tab-btn" onclick="switchTab('timer')">
       <span class="tab-icon">&#9201;</span>
       <span class="tab-label">Timer</span>
@@ -81,10 +85,74 @@
           <p>Add exercises from the Exercises tab</p>
         </div>
       </div>
+      <!-- Saved section visible on desktop inline -->
+      <div class="desktop-saved-section">
+        <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--border);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+            <h3 style="font-size:0.9rem;">Saved Workouts</h3>
+            <button class="btn btn-primary" onclick="showSaveDialog()" style="font-size:0.75rem; padding:0.4rem 0.7rem;">Save Current</button>
+          </div>
+          <div id="saved-list-desktop"></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Tab 3: Active Timer -->
+  <!-- Tab 3: Saved Workouts -->
+  <section class="tab-content" id="tab-saved">
+    <div class="mobile-header">
+      <h1>Saved Workouts</h1>
+      <button class="btn btn-primary" onclick="showSaveDialog()">Save Current</button>
+    </div>
+    <div class="saved-workouts-view">
+      <!-- Sync Section -->
+      <div class="sync-section">
+        <div class="sync-header" onclick="toggleSyncPanel()">
+          <span>&#9729; Cloud Sync</span>
+          <span class="sync-status" id="sync-status">Local only</span>
+        </div>
+        <div class="sync-panel" id="sync-panel">
+          <p class="sync-desc">Sync workouts across devices via your GitHub repo. Data is stored as a JSON file in your repo - persists forever.</p>
+          <div class="sync-input-row" style="margin-bottom:0.5rem;">
+            <input type="text" id="sync-code-input" placeholder="Username (e.g. tanishq)" class="search-input">
+          </div>
+          <div class="sync-input-row">
+            <input type="password" id="sync-token-input" placeholder="GitHub PAT (one-time)" class="search-input">
+            <button class="btn btn-primary" onclick="connectSync()">Connect</button>
+          </div>
+          <p class="sync-desc" style="margin-top:0.5rem; font-size:0.65rem;">
+            Token needs repo write access. Generate at GitHub &rarr; Settings &rarr; Developer settings &rarr; Fine-grained tokens. Only stored in your browser.
+          </p>
+          <div class="sync-actions" id="sync-actions" style="display:none;">
+            <button class="btn btn-outline" onclick="pullFromCloud()">&#8595; Pull</button>
+            <button class="btn btn-outline" onclick="pushToCloud()">&#8593; Push</button>
+            <button class="btn btn-outline" onclick="disconnectSync()">Disconnect</button>
+          </div>
+          <div class="sync-message" id="sync-message"></div>
+          <div style="margin-top:1rem; padding-top:0.75rem; border-top:1px solid var(--border);">
+            <p class="sync-desc" style="margin-bottom:0.5rem;">Or use file export/import:</p>
+            <div class="sync-actions" style="display:flex;">
+              <button class="btn btn-outline" onclick="exportWorkouts()">&#8595; Export JSON</button>
+              <label class="btn btn-outline" style="cursor:pointer;">
+                &#8593; Import JSON
+                <input type="file" accept=".json" onchange="importWorkouts(event)" style="display:none;">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saved Workout List -->
+      <div class="saved-list" id="saved-list">
+        <div class="empty-state">
+          <div class="icon">&#128190;</div>
+          <p>No saved workouts yet. Build a workout and save it!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab 4: Active Timer -->
   <section class="tab-content" id="tab-timer">
     <div class="timer-view">
       <!-- GIF Display -->
@@ -121,7 +189,18 @@
     </div>
   </div>
 
+  <!-- Save Workout Dialog -->
+  <div class="modal-overlay" id="save-modal" onclick="closeSaveModal(event)">
+    <div class="modal-content">
+      <h3 style="margin-bottom:1rem;">Save Workout</h3>
+      <input type="text" id="save-workout-name" class="search-input" placeholder="Workout name (e.g. Push Day, Leg Day)">
+      <button class="modal-btn add" style="margin-top:1rem;" onclick="saveCurrentWorkout()">Save</button>
+      <button class="modal-btn remove" style="margin-top:0.5rem;" onclick="closeSaveModal(event, true)">Cancel</button>
+    </div>
+  </div>
+
   <script src="js/timer.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/storage.js"></script>
 </body>
 </html>
