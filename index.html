@@ -39,6 +39,13 @@
       <h1>GymFlow</h1>
       <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()">🔊</button>
     </div>
+    <!-- Top strip: Quote + Calendar -->
+    <div class="top-strip">
+      <div class="strip-quote" id="strip-quote">
+        <span class="quote-text">Loading...</span>
+      </div>
+      <div class="strip-calendar" id="strip-calendar"></div>
+    </div>
     <div class="exercise-browser">
       <input type="text" class="search-input" id="exercise-search" placeholder="Search exercises..." oninput="onSearch()">
       <div class="filter-row">
@@ -88,6 +95,7 @@
       <!-- Saved section visible on desktop inline -->
       <div class="desktop-saved-section">
         <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--border);">
+          <div id="streak-display-desktop" style="margin-bottom:1rem;"></div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
             <h3 style="font-size:0.9rem;">Saved Workouts</h3>
             <button class="btn btn-primary" onclick="showSaveDialog()" style="font-size:0.75rem; padding:0.4rem 0.7rem;">Save Current</button>
@@ -194,7 +202,7 @@
     <div class="modal-content">
       <h3 style="margin-bottom:1rem;">Save Workout</h3>
       <input type="text" id="save-workout-name" class="search-input" placeholder="Workout name (e.g. Push Day, Leg Day)">
-      <button class="modal-btn add" style="margin-top:1rem;" onclick="saveCurrentWorkout()">Save</button>
+      <button class="modal-btn add" id="save-modal-btn" style="margin-top:1rem;" onclick="saveCurrentWorkout()">Save Workout</button>
       <button class="modal-btn remove" style="margin-top:0.5rem;" onclick="closeSaveModal(event, true)">Cancel</button>
     </div>
   </div>
