@@ -816,7 +816,7 @@ body {
     overflow: hidden;
     position: static;
     display: grid;
-    grid-template-columns: 340px 1fr 380px;
+    grid-template-columns: 300px 1fr 340px;
     grid-template-rows: 100vh;
   }
 
@@ -841,6 +841,10 @@ body {
     border-right: 1px solid var(--border);
   }
 
+  #tab-saved {
+    display: none !important;
+  }
+
   #tab-timer {
     grid-column: 3;
   }
@@ -862,6 +866,188 @@ body {
     border-radius: 20px;
     max-height: 90vh;
   }
+
+  /* Show saved workouts as a section in workout tab on desktop */
+  .desktop-saved-section {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  .desktop-saved-section {
+    display: none;
+  }
+}
+
+/* Saved Workouts */
+.saved-workouts-view {
+  padding: 0.75rem;
+}
+
+.sync-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.sync-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sync-status {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 0.2rem 0.6rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+}
+
+.sync-status.connected {
+  color: var(--green);
+  background: rgba(78, 204, 163, 0.1);
+}
+
+.sync-panel {
+  padding: 0 1rem 1rem;
+  display: none;
+}
+
+.sync-panel.open {
+  display: block;
+}
+
+.sync-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.sync-input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sync-input-row .search-input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.sync-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.sync-actions .btn {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.75rem;
+  padding: 0.5rem 0.5rem;
+  justify-content: center;
+}
+
+.sync-message {
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  min-height: 1.2em;
+}
+
+.sync-message.success { color: var(--green); }
+.sync-message.error { color: var(--accent); }
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-outline:active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Saved Workout Cards */
+.saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.saved-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.saved-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.saved-card-header h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.saved-card-date {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.saved-card-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.saved-card-exercises {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.saved-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.saved-card-actions .btn {
+  flex: 1;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.btn-success {
+  background: var(--green);
+  color: #0f0f0f;
+}
+
+.btn-danger {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.btn-danger:active {
+  background: var(--accent);
+  color: white;
 }
 
 /* Animations */
