@@ -72,6 +72,7 @@ async function init() {
   renderTimer(timer.getState());
   loadSavedWorkouts();
   loadSyncState();
+  loadQuotes();
 
   document.getElementById('tab-exercises').addEventListener('scroll', function () {
     if (this.scrollTop + this.clientHeight >= this.scrollHeight - 200) {
@@ -176,14 +177,14 @@ function renderExerciseList() {
     const inWorkout = workout.some(w => w.exerciseId === ex.id);
     const icon = eqIcons[ex.equipment] || ex.equipment.substring(0, 2).toUpperCase();
     return `
-      <div class="exercise-item ${inWorkout ? 'in-workout' : ''}"
-           onclick="showExerciseModal('${ex.id}')">
+      <div class="exercise-item ${inWorkout ? 'in-workout' : ''}">
         <div class="eq-icon">${icon}</div>
-        <div class="ex-info">
+        <div class="ex-info" onclick="showExerciseModal('${ex.id}')">
           <div class="ex-name">${ex.name}</div>
           <div class="ex-muscles">${ex.primaryMuscles.join(', ')} · ${ex.equipment}</div>
         </div>
-        <div class="ex-add-icon">${inWorkout ? '&#10003;' : '+'}</div>
+        <div class="ex-thumb"><img src="${getGifUrl(ex.gifId)}" alt="" loading="lazy"></div>
+        <button class="ex-add-btn" onclick="addToWorkout('${ex.id}')">${inWorkout ? '&#10003;' : '+'}</button>
       </div>`;
   }).join('');
 }
@@ -462,9 +463,12 @@ function getNextExerciseName(state) {
 
 function onWorkoutComplete() {
   playBeep(1200, 300, 3);
+  markWorkoutCompleted();
+  const streak = getCurrentStreak();
   document.getElementById('timer-gif').innerHTML = `
-    <div class="placeholder" style="font-size:1.5rem; font-weight:700; color:var(--green);">
-      Workout Complete! &#127881;
+    <div class="placeholder" style="font-size:1.3rem; font-weight:700; color:var(--green); line-height:2;">
+      Workout Complete! &#127881;<br>
+      <span style="font-size:2rem;">&#128293; ${streak} day streak</span>
     </div>`;
 }
 
