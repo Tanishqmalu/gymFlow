@@ -132,6 +132,100 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* Top Strip: Quote + Mini Calendar */
+.top-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.strip-quote {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.6rem;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.quote-text {
+  font-size: 0.7rem;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.strip-calendar {
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem 0.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.strip-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+}
+
+.strip-cal-streak {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--yellow);
+}
+
+.strip-cal-month {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+}
+
+.strip-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+.strip-cal-day {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  color: var(--text-muted);
+}
+
+.strip-cal-day.empty {
+  visibility: hidden;
+}
+
+.strip-cal-day.completed {
+  background: var(--green);
+  color: #0f0f0f;
+  font-weight: 700;
+}
+
+.strip-cal-day.today {
+  border: 1.5px solid var(--accent);
+}
+
+.strip-cal-day.today.completed {
+  border-color: var(--green);
+}
+
 /* Exercise Browser */
 .exercise-browser {
   padding: 0.75rem;
@@ -212,19 +306,13 @@ body {
 .exercise-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
+  gap: 0.6rem;
+  padding: 0.5rem 0.6rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  cursor: pointer;
   transition: all 0.15s;
   -webkit-tap-highlight-color: transparent;
-}
-
-.exercise-item:active {
-  transform: scale(0.98);
-  border-color: var(--accent);
 }
 
 .exercise-item.in-workout {
@@ -233,14 +321,14 @@ body {
 }
 
 .exercise-item .eq-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
   background: var(--bg-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 600;
   flex-shrink: 0;
   color: var(--text-muted);
@@ -249,10 +337,15 @@ body {
 .exercise-item .ex-info {
   flex: 1;
   min-width: 0;
+  cursor: pointer;
+}
+
+.exercise-item .ex-info:active {
+  opacity: 0.7;
 }
 
 .exercise-item .ex-name {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -260,19 +353,55 @@ body {
 }
 
 .exercise-item .ex-muscles {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--text-muted);
-  margin-top: 0.15rem;
+  margin-top: 0.1rem;
 }
 
-.exercise-item .ex-add-icon {
-  font-size: 1.2rem;
-  color: var(--text-muted);
+.exercise-item .ex-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
   flex-shrink: 0;
+  background: white;
 }
 
-.exercise-item.in-workout .ex-add-icon {
-  color: var(--green);
+.exercise-item .ex-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exercise-item .ex-add-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.exercise-item .ex-add-btn:active {
+  transform: scale(0.85);
+  background: var(--green);
+  border-color: var(--green);
+  color: #0f0f0f;
+}
+
+.exercise-item.in-workout .ex-add-btn {
+  background: var(--green);
+  border-color: var(--green);
+  color: #0f0f0f;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 /* Exercise Modal */
@@ -873,6 +1002,12 @@ body {
   }
 }
 
+@media (min-width: 768px) {
+  .top-strip {
+    display: none;
+  }
+}
+
 @media (max-width: 767px) {
   .desktop-saved-section {
     display: none;
@@ -1048,6 +1183,125 @@ body {
 .btn-danger:active {
   background: var(--accent);
   color: white;
+}
+
+/* Streak */
+.streak-container {
+  margin-bottom: 1rem;
+}
+
+.streak-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.streak-count {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.streak-fire {
+  font-size: 1.3rem;
+}
+
+.streak-number {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--yellow);
+}
+
+.streak-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.streak-month-count {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.streak-calendar {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 0.75rem 1rem 1rem;
+}
+
+.cal-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.cal-days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+}
+
+.cal-day {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  border-radius: 50%;
+  color: var(--text-muted);
+}
+
+.cal-day.empty {
+  visibility: hidden;
+}
+
+.cal-day.completed {
+  background: var(--green);
+  color: #0f0f0f;
+  font-weight: 700;
+}
+
+.cal-day.today {
+  border: 2px solid var(--accent);
+}
+
+.cal-day.today.completed {
+  border-color: var(--green);
+}
+
+/* Edit Banner */
+.edit-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 0.9rem;
+  background: rgba(78, 204, 163, 0.1);
+  border: 1px solid var(--green);
+  border-radius: var(--radius);
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+}
+
+.edit-banner span {
+  flex: 1;
 }
 
 /* Animations */
