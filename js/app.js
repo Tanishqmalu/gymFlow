@@ -70,6 +70,8 @@ async function init() {
   renderExerciseList();
   renderWorkout();
   renderTimer(timer.getState());
+  loadSavedWorkouts();
+  loadSyncState();
 
   document.getElementById('tab-exercises').addEventListener('scroll', function () {
     if (this.scrollTop + this.clientHeight >= this.scrollHeight - 200) {
